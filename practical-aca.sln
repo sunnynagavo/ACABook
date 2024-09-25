@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenefitsManager.Backend.Bff.Api", "BenefitsManager.Backend.Bff.Api\BenefitsManager.Backend.Bff.Api.csproj", "{EBB23A97-5CEE-432A-BB01-6BB2DD08F69C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenefitsManager.Frontend.Blazor.App", "BenefitsManager.Frontend.Blazor.App\BenefitsManager.Frontend.Blazor.App.csproj", "{C7063B51-281E-43FC-881D-B390979D035C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EBB23A97-5CEE-432A-BB01-6BB2DD08F69C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBB23A97-5CEE-432A-BB01-6BB2DD08F69C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBB23A97-5CEE-432A-BB01-6BB2DD08F69C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7063B51-281E-43FC-881D-B390979D035C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7063B51-281E-43FC-881D-B390979D035C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7063B51-281E-43FC-881D-B390979D035C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7063B51-281E-43FC-881D-B390979D035C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

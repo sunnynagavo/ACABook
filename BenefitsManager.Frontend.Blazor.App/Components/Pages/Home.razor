@@ -1,0 +1,69 @@
+﻿<!-- Client/Pages/Claims.razor -->
+@page "/"
+@using BenefitsManager.Frontend.Blazor.App.Data
+@using BenefitsManager.Frontend.Blazor.App.services
+@inject ClaimService ClaimService
+
+<PageTitle>Manage Claims</PageTitle>
+
+<h1>View recent claims</h1>
+
+__________________________________________________________________________________________________________
+
+@if (claims == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Merchant</td>
+                <td>Receipt Date</td>
+                <td>Amount</td>
+                <td>Category</td>
+                <td>Status</td>
+                <td>Submit Date</td>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var claim in claims)
+            {
+                <tr>
+                    <td>@claim.Merchant</td>
+                    <td>@claim.PurchaseDate</td>
+                    <td>@claim.ClaimedAmount</td>
+                    <td>@claim.Category.CategoryName</td>
+                    <td>@claim.CurrentStatus.ToString()</td>
+                    <td>@DateTimeOffset.FromUnixTimeMilliseconds(claim.CreatedOn).ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>
+                        <button @onclick="() => EditClaim(claim.ClaimId)">Edit</button>
+                        <button @onclick="() => DeleteClaim(claim.ClaimId)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Claim> claims;
+
+    protected override async Task OnInitializedAsync()
+    {
+        claims = await ClaimService.GetClaimsAsync();
+    }
+
+    private void EditClaim(Guid id)
+    {
+        // Navigate to edit page
+    }
+
+    private async Task DeleteClaim(Guid id)
+    {
+        await ClaimService.DeleteClaimAsync(id);
+        claims = await ClaimService.GetClaimsAsync();
+    }
+}
