@@ -2,11 +2,11 @@
 
 namespace BenefitsManager.Frontend.WebPortal.Ui.Services
 {
-    public class ClaimService
+    public class ClaimServices
     {
         private readonly HttpClient _httpClient;
 
-        public ClaimService(HttpClient httpClient)
+        public ClaimServices(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
