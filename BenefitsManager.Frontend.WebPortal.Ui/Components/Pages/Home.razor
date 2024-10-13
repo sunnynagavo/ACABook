@@ -2,13 +2,14 @@
 @page "/"
 @using BenefitsManager.Frontend.WebPortal.Ui.Models
 @using BenefitsManager.Frontend.WebPortal.Ui.Services
-@inject ClaimServices ClaimService
+@inject ClaimsService ClaimsService
+@inject NavigationManager Navigation
 
 <PageTitle>Manage Claims</PageTitle>
 
 <h1>View recent claims</h1>
 
-__________________________________________________________________________________________________________
+<hr>
 
 @if (claims == null)
 {
@@ -16,6 +17,9 @@ ________________________________________________________________________________
 }
 else
 {
+    <div>
+         <button class="btn btn-primary" @onclick="() => NavigateToNewClaim()">New Claim</button>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -39,31 +43,39 @@ else
                     <td>@claim.CurrentStatus.ToString()</td>
                     <td>@DateTimeOffset.FromUnixTimeMilliseconds(claim.CreatedOn).ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")</td>
                     <td>
-                        <button @onclick="() => EditClaim(claim.ClaimId)">Edit</button>
-                        <button @onclick="() => DeleteClaim(claim.ClaimId)">Delete</button>
+                        <button @onclick="() => GoToClaimDetails(claim.ClaimId.ToString())">View Claim</button>
+                        @* @((MarkupString)$"<a href='/claim/{claim.ClaimId.ToString()}'>View Claim</a>") *@
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+
 }
 
 @code {
-    private List<Claim> claims;
+    private List<ClaimModel> claims;
 
     protected override async Task OnInitializedAsync()
     {
-        claims = await ClaimService.GetClaimsAsync();
+        claims = await ClaimsService.GetClaimsAsync();
     }
 
-    private void EditClaim(Guid id)
+     private void NavigateToNewClaim()
     {
-        // Navigate to edit page
+        Navigation.NavigateTo("/new-claim");
+    }
+
+    private void GoToClaimDetails(string claimId)
+    {
+        string url = $"/claim/{claimId}";
+        Console.WriteLine($"Navigating to: {url}");
+        Navigation.NavigateTo(url);
     }
 
     private async Task DeleteClaim(Guid id)
     {
-        await ClaimService.DeleteClaimAsync(id);
-        claims = await ClaimService.GetClaimsAsync();
+        await ClaimsService.DeleteClaimAsync(id);
+        claims = await ClaimsService.GetClaimsAsync();
     }
 }
