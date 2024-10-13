@@ -9,8 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5103") });
-builder.Services.AddScoped<ClaimServices>();
+var backendApiBaseUrlExternalHttp = builder.Configuration.GetValue<string>("BackendApiConfig:BaseUrlExternalHttp");
+
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(backendApiBaseUrlExternalHttp) });
+builder.Services.AddScoped<ClaimsService>();
 
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
 builder.Logging.AddConsole();
