@@ -1,6 +1,10 @@
-@BenefitsManager.Backend.Bff.Api_HostAddress = http://localhost:5103
+@BenefitsManager.Backend.Bff.Api_HostAddress = http://localhost:3500
 
 GET {{BenefitsManager.Backend.Bff.Api_HostAddress}}/api/claims/?userId=user3@mail.com
 Accept: application/json
 
 ###
+
+# Get claims using DAPR Side car API endpoint running locally
+GET {{BenefitsManager.Backend.Bff.Api_HostAddress}}/v1.0/invoke/BenefitsManager-Backend-Bff-Api/method/api/claims/?userId=user3@mail.com
+Accept: application/json
