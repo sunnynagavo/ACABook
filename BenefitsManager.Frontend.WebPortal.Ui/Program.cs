@@ -9,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+// Add Dapr client
+builder.Services.AddDaprClient();
+
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5103") });
 builder.Services.AddScoped<ClaimServices>();
 
