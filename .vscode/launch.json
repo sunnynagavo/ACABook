@@ -2,7 +2,27 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (web)",
+            "name": "Debug BenefitsManager UI",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/BenefitsManager.Frontend.WebPortal.Ui/bin/Debug/net9.0/BenefitsManager.Frontend.WebPortal.Ui.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/BenefitsManager.Frontend.WebPortal.Ui",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Debug BenefitsManager API",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
