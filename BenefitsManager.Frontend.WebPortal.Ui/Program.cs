@@ -13,7 +13,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddDaprClient();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5103") });
-builder.Services.AddScoped<ClaimServices>();
+builder.Services.AddScoped<ClaimsService>();
 
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
 builder.Logging.AddConsole();

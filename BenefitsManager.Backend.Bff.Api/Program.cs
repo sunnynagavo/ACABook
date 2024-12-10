@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using BenefitsManager.Backend.Bff.Api.Models;
 using BenefitsManager.Backend.Bff.Api.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -6,11 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddSingleton<IClaimsManager, FakeClaimsManager>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+//Add Dapr client
+builder.Services.AddDaprClient();
+
+// Add services to the container.
+builder.Services.AddSingleton<IClaimsManager, ClaimsStoreManager>();
+//builder.Services.AddSingleton<IClaimsManager, FakeClaimsManager>();
 
 var app = builder.Build();
 

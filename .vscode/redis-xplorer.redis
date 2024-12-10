@@ -1,0 +1,37 @@
+{
+    "data": {
+        "claimId": "1b30b920-9d27-4a54-b82f-83d8946e380d",
+        "merchant": "Merchant-12",
+        "claimedAmount": 100,
+        "approvedAmount": null,
+        "purchaseDate": 1733558400000,
+        "category": {
+            "categoryCode": "CAT005",
+            "parentCategoryName": "Home Office",
+            "categoryName": "Desks and Chairs"
+        },
+        "description": "new desk",
+        "statusLog": [
+            {
+                "status": 0,
+                "comment": "",
+                "setBy": {
+                    "id": "2c5aa106-adce-4112-9a56-d37477ef18bf",
+                    "email": "user3@mail.com",
+                    "name": "User 3"
+                },
+                "ts": 1733627529377
+            }
+        ],
+        "currentStatus": 0,
+        "receiptPath": "https://www.example.com/receipts/claim1.pdf",
+        "createdBy": {
+            "id": "2c5aa106-adce-4112-9a56-d37477ef18bf",
+            "email": "user3@mail.com",
+            "name": "User 3"
+        },
+        "createdOn": 1733627529377,
+        "modifiedOn": null
+    },
+    "version": "1"
+}

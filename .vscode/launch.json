@@ -2,14 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug BenefitsManager UI",
-            "type": "coreclr",
+            "name": "Launch (web app)",
+            "type": "node",
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/BenefitsManager.Frontend.WebPortal.Ui/bin/Debug/net9.0/BenefitsManager.Frontend.WebPortal.Ui.dll",
             "args": [],
             "cwd": "${workspaceFolder}/BenefitsManager.Frontend.WebPortal.Ui",
-            "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
@@ -17,19 +16,15 @@
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
         },
         {
-            "name": "Debug BenefitsManager API",
-            "type": "coreclr",
+            "name": "Launch (backend api)",
+            "type": "node",
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/BenefitsManager.Backend.Bff.Api/bin/Debug/net9.0/BenefitsManager.Backend.Bff.Api.dll",
             "args": [],
             "cwd": "${workspaceFolder}/BenefitsManager.Backend.Bff.Api",
-            "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
@@ -37,23 +32,55 @@
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
         },
         {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach"
-        },
-        {
-            "name": "Docker .NET Launch",
-            "type": "docker",
+            "name": "Launch (backend api) with Dapr",
+            "type": "node",
             "request": "launch",
-            "preLaunchTask": "docker-run: debug",
-            "netCore": {
-                "appProject": "${workspaceFolder}/BenefitsManager.Backend.Bff.Api/BenefitsManager.Backend.Bff.Api.csproj"
-            }
+            "preLaunchTask": "backend-api-dapr-debug",
+            "program": "${workspaceFolder}/BenefitsManager.Backend.Bff.Api/bin/Debug/net9.0/BenefitsManager.Backend.Bff.Api.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/BenefitsManager.Backend.Bff.Api",
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "postDebugTask": "daprd-down-backend-api"
+        },
+        {
+            "name": "Launch (web app) with Dapr",
+            "type": "node",
+            "request": "launch",
+            "preLaunchTask": "webapp-ui-dapr-debug",
+            "program": "${workspaceFolder}/BenefitsManager.Frontend.WebPortal.Ui/bin/Debug/net9.0/BenefitsManager.Frontend.WebPortal.Ui.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/BenefitsManager.Frontend.WebPortal.Ui",
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "postDebugTask": "webapp-ui-daprd-down"
+        },
+    ],
+    "compounds": [
+        {
+            "name": "RunAll",
+            "configurations": ["Launch (web app)", "Launch (backend api)",],
+            "stopAll": true
+        },
+        {
+            "name": "RunAll with Dapr",
+            "configurations": [
+                "Launch (backend api) with Dapr",
+                "Launch (web app) with Dapr"
+            ],
+            "stopAll": true
         }
     ]
 }

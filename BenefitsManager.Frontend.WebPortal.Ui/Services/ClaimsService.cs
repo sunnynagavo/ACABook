@@ -1,49 +1,63 @@
 ﻿using BenefitsManager.Frontend.WebPortal.Ui.Models;
+using Dapr.Client;
 
 namespace BenefitsManager.Frontend.WebPortal.Ui.Services
 {
     public class ClaimsService
     {
         private readonly HttpClient _httpClient;
+        private readonly DaprClient _daprClient;
 
-        public ClaimsService(HttpClient httpClient)
+        public ClaimsService(HttpClient httpClient, DaprClient daprClient)
         {
             _httpClient = httpClient;
+            _daprClient = daprClient;
         }
 
         public async Task<List<ClaimModel>> GetClaimsAsync()
         {
-            var claims = await _httpClient.GetFromJsonAsync<List<ClaimModel>>("api/claims/?userId=user3@mail.com");
-            if (claims == null)
-            {
-                return new List<ClaimModel>();
-            }
-            return claims;
+            return await _daprClient.InvokeMethodAsync<List<ClaimModel>>(
+                HttpMethod.Get,
+                "BenefitsManager-Backend-Bff-Api",
+                "api/claims/?userId=user3@mail.com"
+            );
         }
 
-        public async Task<ClaimModel> GetClaimByIdAsync(Guid claimId)
+        public async Task<ClaimModel> GetClaimByIdAsync(Guid id)
         {
-            var claim = await _httpClient.GetFromJsonAsync<ClaimModel>($"api/claims/{claimId}");
-            if (claim == null)
-            {
-                throw new InvalidOperationException("Claim not found.");
-            }
-            return claim;
+            return await _daprClient.InvokeMethodAsync<ClaimModel>(
+                HttpMethod.Get,
+                "BenefitsManager-Backend-Bff-Api",
+                $"api/claims/{id}"
+            );
         }
 
-        public async Task<HttpResponseMessage> CreateClaimAsync(ClaimAddModel claim)
+        public async Task<ClaimModel> CreateClaimAsync(ClaimAddModel claim)
         {
-            return await _httpClient.PostAsJsonAsync("api/claims", claim);
+            return await _daprClient.InvokeMethodAsync<ClaimAddModel, ClaimModel>(
+                HttpMethod.Post,
+                "BenefitsManager-Backend-Bff-Api",
+                "api/claims",
+                claim);
         }
 
         public async Task UpdateClaimAsync(ClaimModel claim)
         {
-            await _httpClient.PutAsJsonAsync($"api/claims/{claim.ClaimId}", claim);
+            await _daprClient.InvokeMethodAsync(
+                HttpMethod.Put,
+                "BenefitsManager-Backend-Bff-Api",
+                $"api/claims/{claim}",
+                claim
+            );
         }
 
         public async Task DeleteClaimAsync(Guid id)
         {
-            await _httpClient.DeleteAsync($"api/claims/{id}");
+            await _daprClient.InvokeMethodAsync(
+                HttpMethod.Delete,
+                "BenefitsManager-Backend-Bff-Api",
+                $"api/claims/{id}"
+            );
         }
     }
 }
