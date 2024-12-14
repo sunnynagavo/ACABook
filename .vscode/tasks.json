@@ -38,64 +38,36 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "type": "docker-build",
-            "label": "docker-build: debug",
-            "dependsOn": [
-                "build"
-            ],
-            "dockerBuild": {
-                "tag": "practicalaca:dev",
-                "target": "base",
-                "dockerfile": "${workspaceFolder}/BenefitsManager.Backend.Bff.Api/Dockerfile",
-                "context": "${workspaceFolder}",
-                "pull": true
-            },
-            "netCore": {
-                "appProject": "${workspaceFolder}/BenefitsManager.Backend.Bff.Api/BenefitsManager.Backend.Bff.Api.csproj"
-            }
+            "appId": "BenefitsManager-Backend-Bff-Api",
+            "appPort": 7219,
+            "httpPort": 3500,
+            "grpcPort": 50001,
+            "appSsl": true,
+            "label": "backend-api-dapr-debug",
+            "type": "dapr",
+            "dependsOn": "build-backend-api",
+            // Uncomment this line after adding Azure Cosmos DB to the state store yaml file
+            "componentsPath": "./components"
         },
         {
-            "type": "docker-build",
-            "label": "docker-build: release",
-            "dependsOn": [
-                "build"
-            ],
-            "dockerBuild": {
-                "tag": "practicalaca:latest",
-                "dockerfile": "${workspaceFolder}/BenefitsManager.Backend.Bff.Api/Dockerfile",
-                "context": "${workspaceFolder}",
-                "platform": {
-                    "os": "linux",
-                    "architecture": "amd64"
-                },
-                "pull": true
-            },
-            "netCore": {
-                "appProject": "${workspaceFolder}/BenefitsManager.Backend.Bff.Api/BenefitsManager.Backend.Bff.Api.csproj"
-            }
+            "appId": "BenefitsManager-Backend-Bff-Api",
+            "label": "daprd-down-backend-api",
+            "type": "daprd-down"
         },
         {
-            "type": "docker-run",
-            "label": "docker-run: debug",
-            "dependsOn": [
-                "docker-build: debug"
-            ],
-            "dockerRun": {},
-            "netCore": {
-                "appProject": "${workspaceFolder}/BenefitsManager.Backend.Bff.Api/BenefitsManager.Backend.Bff.Api.csproj",
-                "enableDebugging": true
-            }
+            "appId": "BenefitsManager-Frontend-WebPortal-Ui",
+            "appPort": 7009,
+            "httpPort": 3501,
+            "grpcPort": 50002,
+            "appSsl": true,
+            "label": "webapp-ui-dapr-debug",
+            "type": "dapr",
+            "dependsOn": "build-webapp-ui"
         },
         {
-            "type": "docker-run",
-            "label": "docker-run: release",
-            "dependsOn": [
-                "docker-build: release"
-            ],
-            "dockerRun": {},
-            "netCore": {
-                "appProject": "${workspaceFolder}/BenefitsManager.Backend.Bff.Api/BenefitsManager.Backend.Bff.Api.csproj"
-            }
-        }
+            "appId": "BenefitsManager-Frontend-WebPortal-Ui",
+            "label": "webapp-ui-daprd-down",
+            "type": "daprd-down"
+        },
     ]
 }
