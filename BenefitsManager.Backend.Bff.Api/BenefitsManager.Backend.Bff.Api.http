@@ -95,3 +95,42 @@ Content-Type: application/json
     }
   }
 ]
+
+###
+POST {{BenefitsManager.Backend.Bff.Api_HostAddress}}/v1.0/publish/claimspubsub/claimsavedtopic
+Host: localhost:3500
+Content-Type: application/json
+{
+  "claimId": "7D7FBADD-BBB9-440F-B755-995610327558",
+  "merchant": "Merchant-15",
+  "claimedAmount": 80,
+  "approvedAmount": null,
+  "purchaseDate": 1733201907427,
+  "category": {
+    "categoryCode": "CAT004",
+    "parentCategoryName": "Fitness Activities",
+    "categoryName": "Gym"
+  },
+  "description": "Random description2",
+  "statusLog": [
+        {
+          "status": 0,
+          "comment": "",
+          "setBy": {
+            "id": "323a3afe-711f-4aa6-80d0-f848d24a5340",
+            "email": "user3@mail.com",
+            "name": "User-3"
+          },
+          "ts": 1733450307427
+        }
+      ],
+      "currentStatus": 0,
+      "receiptPath": "https://storage.blob.core.windows.net/claims/bf6e5ec8-852d-4103-a3ce-cbc089b8691b/receipt.pdf",
+      "createdBy": {
+        "id": "323a3afe-711f-4aa6-80d0-f848d24a5340",
+        "email": "user3@mail.com",
+        "name": "User-3"
+      },
+      "createdOn": 1733450307427,
+      "modifiedOn": null
+}
