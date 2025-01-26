@@ -1,7 +1,4 @@
-using BenefitsManager.Backend.Bff.Api.Common;
-using BenefitsManager.Backend.Bff.Api.Models;
-
-namespace BenefitsManager.Backend.Bff.Api.Services
+﻿namespace BenefitsManager.Common.Models
 {
     public interface IClaimsManager
     {

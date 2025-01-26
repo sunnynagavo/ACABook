@@ -1,4 +1,4 @@
-using BenefitsManager.Backend.Bff.Api.Models;
+using BenefitsManager.Common.Models;
 using BenefitsManager.Backend.Bff.Api.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;

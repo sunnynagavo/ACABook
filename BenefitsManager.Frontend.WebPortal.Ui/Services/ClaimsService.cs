@@ -1,4 +1,4 @@
-﻿using BenefitsManager.Frontend.WebPortal.Ui.Models;
+﻿using BenefitsManager.Common.Models;
 using Dapr.Client;
 
 namespace BenefitsManager.Frontend.WebPortal.Ui.Services

@@ -1,7 +1,6 @@
-
+using BenefitsManager.Common.Models;
 using BenefitsManager.Frontend.WebPortal.Ui.Services;
 using BenefitsManager.Frontend.WebPortal.Ui.Components;
-using BenefitsManager.Frontend.WebPortal.Ui.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

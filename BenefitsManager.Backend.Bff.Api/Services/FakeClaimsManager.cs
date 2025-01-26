@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
-using BenefitsManager.Backend.Bff.Api.Common;
-using BenefitsManager.Backend.Bff.Api.Models;
+using BenefitsManager.Common.Models;
 
 namespace BenefitsManager.Backend.Bff.Api.Services
 {

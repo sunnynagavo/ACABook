@@ -1,7 +1,4 @@
-using System.ComponentModel;
-using BenefitsManager.Backend.Bff.Api.Common;
-
-namespace BenefitsManager.Backend.Bff.Api.Models
+﻿namespace BenefitsManager.Common.Models
 {
     public class ClaimModel
     {
@@ -46,13 +43,13 @@ namespace BenefitsManager.Backend.Bff.Api.Models
 
     public class ClaimAddModel
     {
-        public required string Merchant { get; set; }
+        public string Merchant { get; set; }
         public decimal ClaimedAmount { get; set; }
         public long PurchaseDate { get; set; }
-        public required string CategoryCode { get; set; }
+        public string CategoryCode { get; set; }
         public string Description { get; set; } = string.Empty;
-        public required string ReceiptPath { get; set; }
-        public required UserModel CreatedBy { get; set; }
+        public string ReceiptPath { get; set; }
+        public UserModel CreatedBy { get; set; }
     }
 
     public class ClaimUpdateModel

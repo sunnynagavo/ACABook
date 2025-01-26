@@ -1,5 +1,4 @@
-﻿using BenefitsManager.Backend.Bff.Api.Common;
-using BenefitsManager.Backend.Bff.Api.Models;
+﻿using BenefitsManager.Common.Models;
 using Dapr.Client;
 
 namespace BenefitsManager.Backend.Bff.Api.Services
@@ -7,7 +6,7 @@ namespace BenefitsManager.Backend.Bff.Api.Services
     /// <summary>
     /// Manages the claims store which implements the IClaimsManager interface for storing claims in the Dapr State store.
     /// </summary>
-    public class ClaimsStoreManager :IClaimsManager
+    public class ClaimsStoreManager : IClaimsManager
     {
         private static string STORE_NAME = "statestore";
         private readonly DaprClient _daprClient;
@@ -133,7 +132,5 @@ namespace BenefitsManager.Backend.Bff.Api.Services
             await state.SaveAsync();
             return true;
         }
-
-
     }
 }
