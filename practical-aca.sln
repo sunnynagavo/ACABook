@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenefitsManager.Backend.Bff
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenefitsManager.Frontend.WebPortal.Ui", "BenefitsManager.Frontend.WebPortal.Ui\BenefitsManager.Frontend.WebPortal.Ui.csproj", "{AAC361FC-2BEB-4F49-A5BE-AE9E9BB63AB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenefitsManager.Common.Models", "BenefitsManager.Common.Models\BenefitsManager.Common.Models.csproj", "{52B3A15C-AF69-41C8-95E9-0C4EA79B002E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AAC361FC-2BEB-4F49-A5BE-AE9E9BB63AB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAC361FC-2BEB-4F49-A5BE-AE9E9BB63AB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAC361FC-2BEB-4F49-A5BE-AE9E9BB63AB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52B3A15C-AF69-41C8-95E9-0C4EA79B002E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52B3A15C-AF69-41C8-95E9-0C4EA79B002E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52B3A15C-AF69-41C8-95E9-0C4EA79B002E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52B3A15C-AF69-41C8-95E9-0C4EA79B002E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

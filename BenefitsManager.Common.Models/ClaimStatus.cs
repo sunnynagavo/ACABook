@@ -1,4 +1,4 @@
-namespace BenefitsManager.Backend.Bff.Api.Common
+﻿namespace BenefitsManager.Common.Models
 {
     public enum ClaimStatus
     {
