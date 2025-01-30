@@ -1,5 +1,6 @@
 ﻿using BenefitsManager.Common.Models;
 using Dapr.Client;
+using System.Security.Claims;
 
 namespace BenefitsManager.Backend.Bff.Api.Services
 {
@@ -74,7 +75,15 @@ namespace BenefitsManager.Backend.Bff.Api.Services
             _logger.LogInformation("Claim object: {0}", claim);
 
             await _daprClient.SaveStateAsync(STORE_NAME, claimId.ToString(), claim);
+            await PublishClaimSavedEvent(claim);
             return claimId;
+        }
+
+        private async Task PublishClaimSavedEvent(ClaimModel claim)
+        {
+            _logger.LogInformation("Publish claim Saved event for claim with Id: '{0}' and Description: '{1}' by: '{2}'",
+            claim.ClaimId, claim.Description, claim.CreatedBy);
+            await _daprClient.PublishEventAsync("dapr-pubsub-servicebus", "claimsavedtopic", claim);
         }
 
         public async Task<bool> DeleteClaimAsync(Guid claimId)
@@ -110,6 +119,7 @@ namespace BenefitsManager.Backend.Bff.Api.Services
             state.Value.ReceiptPath = receiptPath;
             state.Value.ModifiedOn = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             await state.SaveAsync();
+            await PublishClaimSavedEvent(state.Value);
             return true;
         }
 
@@ -130,6 +140,7 @@ namespace BenefitsManager.Backend.Bff.Api.Services
                 Ts = DateTimeOffset.Now.ToUnixTimeMilliseconds()
             });
             await state.SaveAsync();
+            await PublishClaimSavedEvent(state.Value);
             return true;
         }
     }
