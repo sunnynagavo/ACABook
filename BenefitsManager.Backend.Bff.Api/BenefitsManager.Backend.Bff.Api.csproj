@@ -8,16 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Dapr.AspNetCore" Version="1.14.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0-rc.1.24452.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BenefitsManager.Common.Models\BenefitsManager.Common.Models.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
-
+  
 </Project>
