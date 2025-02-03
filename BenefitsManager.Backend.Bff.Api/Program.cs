@@ -2,6 +2,8 @@ using BenefitsManager.Common.Models;
 using BenefitsManager.Backend.Bff.Api.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.ApplicationInsights.Extensibility;
+using BenefitsManager.Backend.Bff.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,12 @@ builder.Services.AddOpenApi();
 builder.Services.AddDaprClient();
 
 // Add services to the container.
+builder.Services.AddApplicationInsightsTelemetry();
+builder.Services.Configure<TelemetryConfiguration>((o) => {
+    o.TelemetryInitializers.Add(new AppInsightsTelemetryInitializer());
+});
+
+
 builder.Services.AddSingleton<IClaimsManager, ClaimsStoreManager>();
 //builder.Services.AddSingleton<IClaimsManager, FakeClaimsManager>();
 
@@ -36,19 +44,6 @@ app.MapGet("/api/claims/{claimId}", async ([FromRoute] Guid claimId, IClaimsMana
            .WithName("GetClaimById")
            .Produces<ClaimModel>()
            .Produces<NotFound>();
-
-// app.MapPost("/api/claims", async ([FromBody] ClaimAddModel claimModel, IClaimsManager claimsManager) =>
-//     Results.Created("/api/claims", 
-//     await claimsManager.CreateNewClaimAsync(claimModel.Merchant, 
-//     claimModel.ClaimedAmount, 
-//     claimModel.PurchaseDate, 
-//     claimModel.CategoryCode, 
-//     claimModel.Description, 
-//     claimModel.ReceiptPath, 
-//     claimModel.CreatedBy)))
-//         .WithName("CreateNewClaim")
-//         .Produces<Guid>()
-//         .Produces<Created>();
 
 app.MapPost("/api/claims", async ([FromBody] ClaimAddModel claimModel, IClaimsManager claimsManager) =>
 {

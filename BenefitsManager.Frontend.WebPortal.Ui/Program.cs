@@ -1,10 +1,17 @@
 using BenefitsManager.Common.Models;
 using BenefitsManager.Frontend.WebPortal.Ui.Services;
 using BenefitsManager.Frontend.WebPortal.Ui.Components;
+using Microsoft.ApplicationInsights.Extensibility;
+using BenefitsManager.Frontend.WebPortal.Ui;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddApplicationInsightsTelemetry();
+builder.Services.Configure<TelemetryConfiguration>((o) => {
+    o.TelemetryInitializers.Add(new AppInsightsTelemetryInitializer());
+});
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
