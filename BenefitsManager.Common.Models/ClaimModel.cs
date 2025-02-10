@@ -15,7 +15,8 @@
         public required UserModel CreatedBy { get; set; }
         public long CreatedOn { get; set; }
         public long? ModifiedOn { get; set; }
-
+        public bool IsOverDue { get; set; }
+        public bool IsCompleted { get; set; }
     }
 
     public class ClaimCategoryModel
