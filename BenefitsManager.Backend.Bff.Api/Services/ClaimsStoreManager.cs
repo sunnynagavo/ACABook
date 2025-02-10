@@ -1,6 +1,12 @@
 ﻿using BenefitsManager.Common.Models;
 using Dapr.Client;
+using System.ComponentModel;
 using System.Security.Claims;
+using System.Text.Encodings.Web;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using BenefitsManager.Backend.Bff.Api.Utilities;
+using DateTimeConverter = BenefitsManager.Backend.Bff.Api.Utilities.DateTimeConverter;
 
 namespace BenefitsManager.Backend.Bff.Api.Services
 {
@@ -142,6 +148,53 @@ namespace BenefitsManager.Backend.Bff.Api.Services
             await state.SaveAsync();
             await PublishClaimSavedEvent(state.Value);
             return true;
+        }
+
+        public async Task MarkOverdueClaims(List<ClaimModel> overdueClaimsList)
+        {
+            foreach (var ClaimModel in overdueClaimsList)
+            {
+                _logger.LogInformation("Mark Claim with Id: '{0}' as OverDue task", ClaimModel.ClaimId);
+                ClaimModel.IsOverDue = true;
+                await _daprClient.SaveStateAsync(STORE_NAME, ClaimModel.ClaimId.ToString(), ClaimModel);
+            }
+        }
+
+        public async Task<List<ClaimModel>> GetYesterdaysDueClaims()
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true,
+                Converters =
+                {
+                    new JsonStringEnumConverter(),
+                    new DateTimeConverter("yyyy-MM-ddTHH:mm:ss")
+                },
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            };
+            var yesterday = DateTime.Today.AddDays(-1);
+
+            var jsonDate = JsonSerializer.Serialize(yesterday, options);
+
+            _logger.LogInformation("Getting overdue claims for yesterday date: '{0}'", jsonDate);
+
+            var query = "{" +
+                    "\"filter\": {" +
+                        "\"EQ\": { \"claimDueDate\": " + jsonDate + " }" +
+                    "}}";
+
+            var queryResponse = await _daprClient.QueryStateAsync<ClaimModel>(STORE_NAME, query);
+
+            var tasksList = queryResponse.Results
+                             .Where(q => q.Data != null)         // filter null data
+                             .Select(q => q.Data)
+                             .Where(q => q!.IsCompleted == false && q.IsOverDue == false)
+                             .OrderBy(o => o!.CreatedOn);
+
+            return tasksList.ToList()!;
         }
     }
 }

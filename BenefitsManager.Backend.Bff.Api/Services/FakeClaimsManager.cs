@@ -201,5 +201,17 @@ namespace BenefitsManager.Backend.Bff.Api.Services
 
             return Task.FromResult(true);
         }
+
+        public Task MarkOverdueClaims(List<ClaimModel> overdueClaimsList)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ClaimModel>> GetYesterdaysDueClaims()
+        {
+            var claimList = _claimsList.Where(c => c.IsOverDue).ToList();
+
+            return Task.FromResult(claimList);
+        }
     }
 }
